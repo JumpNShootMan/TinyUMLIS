@@ -113,13 +113,19 @@ public class MenuManager implements ActionListener {
     JRadioButtonMenuItem zoom75 = createRadioMenuItem(viewMenu, "zoom_75");
     JRadioButtonMenuItem zoom100 = createRadioMenuItem(viewMenu, "zoom_100");
     JRadioButtonMenuItem zoom150 = createRadioMenuItem(viewMenu, "zoom_150");
+    JRadioButtonMenuItem zoom200 = createRadioMenuItem(viewMenu, "zoom_200");
+    viewMenu.add(zoom50);
+    viewMenu.add(zoom75);
+    viewMenu.add(zoom100);
     viewMenu.add(zoom150);
+    viewMenu.add(zoom200);
     ButtonGroup group = new ButtonGroup();
     group.add(zoom50);
     group.add(zoom75);
     group.add(zoom100);
     group.add(zoom150);
-    zoom100.setSelected(true);
+    group.add(zoom200);
+    zoom100.setSelected(true); //valor por default
     viewMenu.addSeparator();
     JMenuItem showGrid = createCheckBoxMenuItem(viewMenu, "showgrid");
     showGrid.setSelected(true);
