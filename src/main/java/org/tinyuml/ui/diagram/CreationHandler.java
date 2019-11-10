@@ -46,6 +46,10 @@ public class CreationHandler implements EditorMode {
   private Node element;
   private Point2D tmpPos = new Point2D.Double();
   private Rectangle2D cachedBounds;
+  private int CountClass =1;
+  private int CountPackage =1;
+  private int CountComponent =1;
+  private int CountNote =1;
 
   /**
    * Constructor.
@@ -69,7 +73,22 @@ public class CreationHandler implements EditorMode {
    */
   public void setElementType(ElementType type) {
     elementType = type;
-    element = editor.getDiagram().getElementFactory().createNode(elementType);
+    element = editor.getDiagram().getElementFactory(0).createNode(elementType);
+    if(type.equals(ElementType.CLASS)){
+      element = editor.getDiagram().getElementFactory(CountClass).createNode(elementType);
+      CountClass++;
+    }
+    else if(type.equals(ElementType.PACKAGE)){
+      element = editor.getDiagram().getElementFactory(CountPackage).createNode(elementType);
+      CountPackage++;
+    }
+    else if(type.equals(ElementType.COMPONENT)){
+      element = editor.getDiagram().getElementFactory(CountComponent).createNode(elementType);
+      CountComponent++;
+    }else if(type.equals(ElementType.NOTE)){
+      element = editor.getDiagram().getElementFactory(CountNote).createNode(elementType);
+      CountNote++;
+    }
     element.setParent(editor.getDiagram());
     cachedBounds = null;
   }

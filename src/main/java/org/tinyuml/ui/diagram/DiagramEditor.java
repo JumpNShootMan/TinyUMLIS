@@ -274,9 +274,9 @@ DiagramEditorNotification, DiagramOperations, NodeChangeListener {
 		clonedElements.put(elem, copia);
 	}
 	
-	// hasta aquí tengo el hash de cada objeto con su clon (del nuevo diagrama)
+	// hasta aquï¿½ tengo el hash de cada objeto con su clon (del nuevo diagrama)
 	// ahora debo iterar por cada Connection en elements y rehacer sus conexiones
-	// tomaré el ejemplo desde PasteElementCommand.
+	// tomarï¿½ el ejemplo desde PasteElementCommand.
 	for(DiagramElement elem : elements){
 		if(elem instanceof Connection){
 			Connection currentConnection = (Connection)elem;
@@ -614,6 +614,7 @@ DiagramEditorNotification, DiagramOperations, NodeChangeListener {
   public void setCreationMode(ElementType elementType) {
     creationHandler.setElementType(elementType);
     editorMode = creationHandler;
+
   }
 
   /**
@@ -622,7 +623,7 @@ DiagramEditorNotification, DiagramOperations, NodeChangeListener {
    */
   public void setCreateConnectionMode(RelationType relationType) {
     lineHandler.setRelationType(relationType,
-      getDiagram().getElementFactory().getConnectMethod(relationType));
+      getDiagram().getElementFactory(-1).getConnectMethod(relationType));
     editorMode = lineHandler;
   }
 

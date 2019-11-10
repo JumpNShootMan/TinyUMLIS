@@ -148,8 +148,8 @@ implements NodeChangeListener, LabelSource, Diagram {
    * Returns this diagram's DiagramElementFactory.
    * @return the element factory
    */
-  public DiagramElementFactory getElementFactory() {
-    return new DiagramElementFactoryImpl(this);
+  public DiagramElementFactory getElementFactory(int num) {
+    return new DiagramElementFactoryImpl(this,num);
   }
 
   /**
@@ -308,7 +308,7 @@ implements NodeChangeListener, LabelSource, Diagram {
     
     double drawingGridSize = getDrawGridSize();
     
-    // Solicitud C: se setea el color desde aquí.
+    // Solicitud C: se setea el color desde aquï¿½.
     Color gridColor = new Color(210, 210, 210);
     drawingContext.setColor(gridColor);
 

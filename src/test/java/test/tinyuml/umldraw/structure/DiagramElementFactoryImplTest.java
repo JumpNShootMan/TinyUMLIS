@@ -65,7 +65,7 @@ public class DiagramElementFactoryImplTest extends MockObjectTestCase {
    */
   @Override
   protected void setUp() {
-   factory = new DiagramElementFactoryImpl(diagram);
+   factory = new DiagramElementFactoryImpl(diagram,-1);
   }
   
   // ************************************************************************

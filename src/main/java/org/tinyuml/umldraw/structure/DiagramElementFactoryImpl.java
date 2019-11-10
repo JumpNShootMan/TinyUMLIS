@@ -56,16 +56,16 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
    * Constructor.
    * @param aDiagram the diagram this factory belongs to
    */
-  public DiagramElementFactoryImpl(StructureDiagram aDiagram) {
+  public DiagramElementFactoryImpl(StructureDiagram aDiagram,int num) {
     diagram = aDiagram;
-    setupElementPrototypeMap();
+    setupElementPrototypeMap(num);
     setupConnectionPrototypeMap();
   }
 
   /**
    * Initializes the element map with the element prototypes.
    */
-  private void setupElementPrototypeMap() {
+  private void setupElementPrototypeMap(int num) {
     NoteElement notePrototype = (NoteElement)
       NoteElement.getPrototype().clone();
     elementPrototypes.put(ElementType.NOTE, notePrototype);
@@ -74,13 +74,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
     UmlPackage pkg = (UmlPackage) UmlPackage.getPrototype().clone();
     PackageElement pkgPrototype = (PackageElement)
       PackageElement.getPrototype().clone();
-    pkg.setName("Package 1");
+    pkg.setName("Package "+Integer.toString(num));
     pkgPrototype.setUmlPackage(pkg);
     elementPrototypes.put(ElementType.PACKAGE, pkgPrototype);
 
     // add component prototype
     UmlComponent comp = (UmlComponent) UmlComponent.getPrototype().clone();
-    comp.setName("Component 1");
+    comp.setName("Component "+Integer.toString(num));
     ComponentElement compElem = (ComponentElement)
       ComponentElement.getPrototype().clone();
     compElem.setModelElement(comp);
@@ -89,7 +89,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 
     // Add class prototype
     UmlClass clss = (UmlClass) UmlClass.getPrototype().clone();
-    clss.setName("Class 1");
+    clss.setName("Class "+Integer.toString(num));
     ClassElement classElem = (ClassElement) ClassElement.getPrototype().clone();
     classElem.setModelElement(clss);
     classElem.addNodeChangeListener(diagram);

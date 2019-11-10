@@ -125,7 +125,7 @@ public class LineHandler implements EditorMode {
     DiagramElement elem = editor.getDiagram().getChildAt(mx, my);
     if (source != null && isValidTarget(elem)) {
       UmlConnection conn =
-        editor.getDiagram().getElementFactory().createConnection(relationType,
+        editor.getDiagram().getElementFactory(-1).createConnection(relationType,
           (UmlNode) source, (UmlNode) elem);
       connectMethod.generateAndSetPointsToConnection(conn, source,
         (UmlNode) elem, anchor, tmpPos);
