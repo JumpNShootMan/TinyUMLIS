@@ -75,7 +75,7 @@ import org.tinyuml.util.MethodCall;
  * @version 1.0
  */
 public class AppFrame extends JFrame
-implements EditorStateListener, AppCommandListener, SelectionListener {
+        implements EditorStateListener, AppCommandListener, SelectionListener {
 
   private JTabbedPane tabbedPane;
   private JLabel coordLabel = new JLabel("    ");
@@ -89,12 +89,15 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
   private transient MenuManager menumanager;
   private transient File currentFile;
   private transient Map<String, MethodCall> selectorMap =
-    new HashMap<String, MethodCall>();
-  Integer contador = 1;
+          new HashMap<String, MethodCall>();
+
+  private Integer contador = 1;
+
+
   // Solitud D: Se necesita llevar cuenta de todos los DiagramEditor presentes
   // para cada tab. Lo haremos con LinkedList
   private LinkedList<DiagramEditor> diagramEditors;
-  
+
   // Solicitud E: Variable de instancia que lleve cuenta de los elementos
   // que fueron copiados.
   private Collection<DiagramElement> lastCopiedElements;
@@ -107,7 +110,7 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    */
   @SuppressWarnings("PMD.UnusedFormalParameter")
   private void readObject(ObjectInputStream stream)
-    throws IOException, ClassNotFoundException {
+          throws IOException, ClassNotFoundException {
     timer = new Timer();
     staticToolbarManager = null;
     editorDispatcher = null;
@@ -121,13 +124,12 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    * Creates a new instance of AppFrame.
    */
   public AppFrame() {
-	// Solicitud D: debemos inicializar la lista enlazada de DiagramEditor
-	diagramEditors = new LinkedList<DiagramEditor>();
+    // Solicitud D: debemos inicializar la lista enlazada de DiagramEditor
+    diagramEditors = new LinkedList<DiagramEditor>();
 
+    // Solicitud E: al principio no existen elementos copiados.
+    lastCopiedElements = null;
 
-	// Solicitud E: al principio no existen elementos copiados.
-	lastCopiedElements = null;
-	  
     setTitle(getResourceString("application.title"));
     setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     editorDispatcher = new EditorCommandDispatcher(this);
@@ -158,22 +160,23 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    * @return the current editor
    */
   public DiagramEditor getCurrentEditor() {
-	// cambio Solicitud D: Pedimos el �ndice del nuevo tab
-	// y obtenemos el editor actual desde nuestra lista enlazada
-	// con el �ndice entregado
-	
-	int currentTabIndex = tabbedPane.getSelectedIndex();
-	
-    return diagramEditors.get(currentTabIndex);
+    // cambio Solicitud D: Pedimos el �ndice del nuevo tab
+    // y obtenemos el editor actual desde nuestra lista enlazada
+    // con el �ndice entregado
+
+    //int currentTabIndex = tabbedPane.getSelectedIndex();
+
+    //return diagramEditors.get(currentTabIndex);
+    return currentEditor;
   }
-  
+
   /**
    * Returns the last collection of items ready to copy.
    * Implementado para cumplir con la solicitud E de la tarea.
    * @return Collection of items ready to copy
    */
   public Collection<DiagramElement> getElementsToCopy(){
-	  return lastCopiedElements;
+    return lastCopiedElements;
   }
 
   /**
@@ -206,11 +209,11 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
     currentEditor.addAppCommandListener(editorDispatcher);
     currentEditor.addAppCommandListener(this);
     JScrollPane spane = new JScrollPane(currentEditor);
-    
+
     // Solicitud D: debemos llevar la cuenta de todos los DiagramEditor
     // en nuestra LinkedList (variable de I. diagramEditors)
     diagramEditors.add(currentEditor);
-    
+
     JPanel editorPanel = new JPanel(new BorderLayout());
     spane.getVerticalScrollBar().setUnitIncrement(10);
     spane.getHorizontalScrollBar().setUnitIncrement(10);
@@ -225,7 +228,7 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
       /** {@inheritDoc} */
       public void labelTextChanged(Label label) {
         tabbedPane.setTitleAt(tabbedPane.indexOfComponent(comp),
-                              label.getText());
+                label.getText());
       }
     });
   }
@@ -247,6 +250,7 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
     menumanager = new MenuManager();
     menumanager.addCommandListener(this);
     menumanager.addCommandListener(editorDispatcher);
+    getContentPane().add(toolbarmanager.getToolbar(), BorderLayout.NORTH);
     setJMenuBar(menumanager.getMenuBar());
   }
 
@@ -282,7 +286,7 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    */
   public void mouseMoved(EditorMouseEvent event) {
     coordLabel.setText(String.format("(%.1f, %.1f)", event.getX(),
-      event.getY()));
+            event.getY()));
   }
 
   /**
@@ -329,18 +333,18 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    */
   public void selectionStateChanged() {
     boolean hasSelection = getCurrentEditor().getSelectedElements().size() > 0;
-    
+
     // Solicitud E: Veremos qu� pasa si habilitamos los Items del men�
     // aunque no tengan ning�n comando asociado.
-    
+
     menumanager.enableMenuItem("CUT", hasSelection);
     menumanager.enableMenuItem("COPY", hasSelection);
-    
+
     menumanager.enableMenuItem("DELETE", hasSelection);
-    
+
     toolbarmanager.enableButton("CUT", hasSelection);
     toolbarmanager.enableButton("COPY", hasSelection);
-    
+
     toolbarmanager.enableButton("DELETE", hasSelection);
   }
 
@@ -354,36 +358,38 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
   private void initSelectorMap() {
     try {
       selectorMap.put("NEW_MODEL", new MethodCall(
-        getClass().getMethod("newModel")));
+              getClass().getMethod("newModel")));
       selectorMap.put("OPEN_MODEL", new MethodCall(
-        getClass().getMethod("openModel")));
+              getClass().getMethod("openModel")));
       selectorMap.put("SAVE_AS", new MethodCall(
-        getClass().getMethod("saveAs")));
+              getClass().getMethod("saveAs")));
       selectorMap.put("SAVE", new MethodCall(
-        getClass().getMethod("save")));
+              getClass().getMethod("save")));
       selectorMap.put("EXPORT_GFX", new MethodCall(
-        getClass().getMethod("exportGfx")));
-      
+              getClass().getMethod("exportGfx")));
+
+      selectorMap.put("CLOSE", new MethodCall(
+              getClass().getMethod("close")));
       // Solicitud E: Para implementar cut, copy y paste hay que
       // tener listeners!
       selectorMap.put("CUT", new MethodCall(
-    	getClass().getMethod("cut")));
+              getClass().getMethod("cut")));
       selectorMap.put("COPY", new MethodCall(
-    	getClass().getMethod("copy")));
+              getClass().getMethod("copy")));
       selectorMap.put("PASTE", new MethodCall(
-        getClass().getMethod("paste")));
-      
-      
+              getClass().getMethod("paste")));
+
+
       selectorMap.put("DELETE", new MethodCall(
-    	getClass().getMethod("delete")));
+              getClass().getMethod("delete")));
       selectorMap.put("EDIT_SETTINGS", new MethodCall(
-        getClass().getMethod("editSettings")));
+              getClass().getMethod("editSettings")));
       selectorMap.put("QUIT", new MethodCall(
-        getClass().getMethod("quitApplication")));
+              getClass().getMethod("quitApplication")));
       selectorMap.put("ABOUT", new MethodCall(
-        getClass().getMethod("about")));
+              getClass().getMethod("about")));
       selectorMap.put("HELP_CONTENTS", new MethodCall(
-        getClass().getMethod("displayHelpContents")));
+              getClass().getMethod("displayHelpContents")));
     } catch (NoSuchMethodException ex) {
       ex.printStackTrace();
     }
@@ -420,9 +426,9 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
   private boolean canQuit() {
     if (currentEditor.canUndo()) {
       return JOptionPane.showConfirmDialog(this,
-        ApplicationResources.getInstance().getString("confirm.quit.message"),
-        ApplicationResources.getInstance().getString("confirm.quit.title"),
-        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+              ApplicationResources.getInstance().getString("confirm.quit.message"),
+              ApplicationResources.getInstance().getString("confirm.quit.title"),
+              JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
     return true;
   }
@@ -438,19 +444,26 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    * Creates a new model.
    */
   public void newModel() {
-	// Solicitud D: No se requiere preguntar si se puede crear nuevo modelo
-	// S�lo debemos preguntar al cerrar los tabs (TODO?)
-    umlModel = new UmlModelImpl();
-    StructureDiagram diagram = new StructureDiagram(umlModel);
-    umlModel.addDiagram(diagram);
-    diagram.setLabelText("Class diagram " + contador);
-    
-    // Cambio Solicitud D: Veremos qu� pasa si no removemos todo y en vez de eso
-    // solo agregamos un nuevo Tab
-  
-    /* tabbedPane.removeAll(); */
-    createEditor(diagram);
-    contador++;
+    // Solicitud D: No se requiere preguntar si se puede crear nuevo modelo
+    // S�lo debemos preguntar al cerrar los tabs (TODO?)
+    if (canCreateNewModel()) {
+      umlModel = new UmlModelImpl();
+      StructureDiagram diagram = new StructureDiagram(umlModel);
+      umlModel.addDiagram(diagram);
+      diagram.setLabelText("Class diagram " + this.contador);
+
+      // Cambio Solicitud D: Veremos qu� pasa si no removemos todo y en vez de eso
+      // solo agregamos un nuevo Tab
+
+      /* tabbedPane.removeAll(); */
+      this.contador++;
+      createEditor(diagram);
+    }
+  }
+
+  public void close(){
+    this.contador=1;
+    tabbedPane.removeAll();
   }
 
   /**
@@ -458,12 +471,12 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    * @return true the model can be created, false otherwise
    */
   private boolean canCreateNewModel() {
-	//TODO: Puede ser que no se necesite m�s el m�todo canCreateNewModel
+    //TODO: Puede ser que no se necesite m�s el m�todo canCreateNewModel
     if (currentEditor != null && currentEditor.canUndo()) {
       return JOptionPane.showConfirmDialog(this,
-        ApplicationResources.getInstance().getString("confirm.new.message"),
-        ApplicationResources.getInstance().getString("confirm.new.title"),
-        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+              ApplicationResources.getInstance().getString("confirm.new.message"),
+              ApplicationResources.getInstance().getString("confirm.new.title"),
+              JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
     return true;
   }
@@ -505,9 +518,9 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle(getResourceString("dialog.exportgfx.title"));
     FileNameExtensionFilter svgFilter = new FileNameExtensionFilter(
-      "Scalable Vector Graphics file (*.svg)", "svg");
+            "Scalable Vector Graphics file (*.svg)", "svg");
     FileNameExtensionFilter pngFilter = new FileNameExtensionFilter(
-      "Portable Network Graphics file (*.png)", "png");
+            "Portable Network Graphics file (*.png)", "png");
     fileChooser.addChoosableFileFilter(svgFilter);
     fileChooser.addChoosableFileFilter(pngFilter);
     fileChooser.setAcceptAllFileFilterUsed(false);
@@ -518,8 +531,8 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
           exporter.writeSVG(getCurrentEditor(), fileChooser.getSelectedFile());
         } catch (IOException ex) {
           JOptionPane.showMessageDialog(this, ex.getMessage(),
-            getResourceString("error.exportgfx.title"),
-            JOptionPane.ERROR_MESSAGE);
+                  getResourceString("error.exportgfx.title"),
+                  JOptionPane.ERROR_MESSAGE);
         }
       } else if (fileChooser.getFileFilter() == pngFilter) {
         try {
@@ -527,8 +540,8 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
           exporter.writePNG(getCurrentEditor(), fileChooser.getSelectedFile());
         } catch (IOException ex) {
           JOptionPane.showMessageDialog(this, ex.getMessage(),
-            getResourceString("error.exportgfx.title"),
-            JOptionPane.ERROR_MESSAGE);
+                  getResourceString("error.exportgfx.title"),
+                  JOptionPane.ERROR_MESSAGE);
         }
       }
     }
@@ -540,7 +553,7 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    */
   private FileNameExtensionFilter createModelFileFilter() {
     return new FileNameExtensionFilter(
-      "TinyUML serialized model file (*.tsm)", "tsm");
+            "TinyUML serialized model file (*.tsm)", "tsm");
   }
 
   /**
@@ -548,22 +561,22 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    */
   public void openModel() {
     //if (canOpen()) {
-      JFileChooser fileChooser = new JFileChooser();
-      fileChooser.setDialogTitle(getResourceString("dialog.openmodel.title"));
-      fileChooser.addChoosableFileFilter(createModelFileFilter());
-      if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-        try {
-          currentFile = fileChooser.getSelectedFile();
-          umlModel = ModelReader.getInstance().readModel(currentFile);
-          //tabbedPane.removeAll();
-          createEditor((StructureDiagram) umlModel.getDiagrams().get(0));
-          updateFrameTitle();
-        } catch (IOException ex) {
-          JOptionPane.showMessageDialog(this, ex.getMessage(),
-            getResourceString("error.readfile.title"),
-            JOptionPane.ERROR_MESSAGE);
-        }
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle(getResourceString("dialog.openmodel.title"));
+    fileChooser.addChoosableFileFilter(createModelFileFilter());
+    if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+      try {
+        currentFile = fileChooser.getSelectedFile();
+        umlModel = ModelReader.getInstance().readModel(currentFile);
+        //tabbedPane.removeAll();
+        createEditor((StructureDiagram) umlModel.getDiagrams().get(0));
+        updateFrameTitle();
+      } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage(),
+                getResourceString("error.readfile.title"),
+                JOptionPane.ERROR_MESSAGE);
       }
+    }
     //}
   }
 
@@ -574,9 +587,9 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
   private boolean canOpen() {
     if (currentEditor.canUndo()) {
       return JOptionPane.showConfirmDialog(this,
-        ApplicationResources.getInstance().getString("confirm.open.message"),
-        ApplicationResources.getInstance().getString("confirm.open.title"),
-        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+              ApplicationResources.getInstance().getString("confirm.open.message"),
+              ApplicationResources.getInstance().getString("confirm.open.title"),
+              JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
     return true;
   }
@@ -620,7 +633,7 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
     } catch (IOException ex) {
       ex.printStackTrace();
       JOptionPane.showMessageDialog(this, ex.getMessage(),
-        getResourceString("error.savefile.title"), JOptionPane.ERROR_MESSAGE);
+              getResourceString("error.savefile.title"), JOptionPane.ERROR_MESSAGE);
     }
     return result;
   }
@@ -631,51 +644,51 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
   private void updateFrameTitle() {
     if (currentFile != null) {
       setTitle(ApplicationResources.getInstance()
-        .getString("application.title") + " [" + currentFile.getName() + "]");
+              .getString("application.title") + " [" + currentFile.getName() + "]");
     } else {
       setTitle(ApplicationResources.getInstance()
-        .getString("application.title"));
+              .getString("application.title"));
     }
   }
-  
+
   /**
    * Performs the action of Cutting an element from the diagram.
    * This means it will save the current selected elements and
    * delete them from the current diagram.
-   * 
+   *
    * Hecho para la solicitud E de la tarea.
    */
   public void cut(){
-	  copy();
-	  delete();
-	  
-	  // Note que despu�s de efectuar �sta acci�n el focus desaparece
-	  // por lo tanto hay que volver a verificar qu� botones se pueden
-	  // presionar
-	  selectionStateChanged();
+    copy();
+    delete();
+
+    // Note que despu�s de efectuar �sta acci�n el focus desaparece
+    // por lo tanto hay que volver a verificar qu� botones se pueden
+    // presionar
+    selectionStateChanged();
   }
-  
+
   /**
    * Keeps track of the last copied elements (the ones selected when
    * Ctrl+C was used).
    * Creado para cumplir con la solicitud E de la tarea.
    */
   public void copy(){
-	  boolean hasSelection = getCurrentEditor().getSelectedElements().size() > 0;
-	  
-	  if(hasSelection)
-	    lastCopiedElements = getCurrentEditor().getSelectedElements();
-	  
-	  //adicionalmente, hay que habilitar el bot�n PASTE!
-	  menumanager.enableMenuItem("PASTE", hasSelection);
-	  toolbarmanager.enableButton("PASTE", hasSelection);
+    boolean hasSelection = getCurrentEditor().getSelectedElements().size() > 0;
+
+    if(hasSelection)
+      lastCopiedElements = getCurrentEditor().getSelectedElements();
+
+    //adicionalmente, hay que habilitar el bot�n PASTE!
+    menumanager.enableMenuItem("PASTE", hasSelection);
+    toolbarmanager.enableButton("PASTE", hasSelection);
   }
-  
+
   /**
    * Pastes into the current diagram the latest elements copied.
    */
   public void paste(){
-	getCurrentEditor().pasteElement(lastCopiedElements);
+    getCurrentEditor().pasteElement(lastCopiedElements);
   }
 
   /**
@@ -690,7 +703,7 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
    */
   public void about() {
     JOptionPane.showMessageDialog(this, getResourceString("dialog.about.text"),
-      getResourceString("dialog.about.title"), JOptionPane.INFORMATION_MESSAGE);
+            getResourceString("dialog.about.title"), JOptionPane.INFORMATION_MESSAGE);
   }
 
   /**
@@ -702,9 +715,9 @@ implements EditorStateListener, AppCommandListener, SelectionListener {
       Desktop.getDesktop().browse(helpUri);
     } catch (IOException ex) {
       JOptionPane.showMessageDialog(this,
-        getResourceString("error.nohelp.message"),
-        getResourceString("error.nohelp.title"),
-        JOptionPane.ERROR_MESSAGE);
+              getResourceString("error.nohelp.message"),
+              getResourceString("error.nohelp.title"),
+              JOptionPane.ERROR_MESSAGE);
     } catch (URISyntaxException ignore) {
       ignore.printStackTrace();
     }

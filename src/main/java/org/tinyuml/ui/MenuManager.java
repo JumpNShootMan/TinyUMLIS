@@ -71,6 +71,7 @@ public class MenuManager implements ActionListener {
     createMenuItem(fileMenu, "open");
     createMenuItem(fileMenu, "saveas");
     createMenuItem(fileMenu, "save");
+    createMenuItem(fileMenu, "close");
     createMenuItem(fileMenu, "exportgfx");
     fileMenu.addSeparator();
     createMenuItem(fileMenu, "quit");
