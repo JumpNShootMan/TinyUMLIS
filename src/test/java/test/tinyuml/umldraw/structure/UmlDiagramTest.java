@@ -59,7 +59,7 @@ public class UmlDiagramTest extends MockObjectTestCase {
     assertNull(diagram.getLabelText());
     assertTrue(diagram.isGridVisible());
     assertNull(diagram.getParent());
-    assertNotNull(diagram.getElementFactory());
+    assertNotNull(diagram.getElementFactory(-1));
   }
 
   /**

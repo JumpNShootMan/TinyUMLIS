@@ -109,7 +109,7 @@ public class CreationHandlerTest extends MockObjectTestCase {
   /**
    * Tests the creation.
    */
-  public void testCreate() {
+  public void testCreate(int num) {
     mockEditor.expects(atLeastOnce()).method("getDiagram")
       .will(returnValue(mockDiagram.proxy()));
     mockDiagram.expects(atLeastOnce()).method("getElementFactory")
@@ -148,7 +148,7 @@ public class CreationHandlerTest extends MockObjectTestCase {
   /**
    * Tests the creation.
    */
-  public void testCreateInNester() {
+  public void testCreateInNester(int num) {
     Rectangle2D nodeBounds = new Rectangle2D.Double(0, 0, 10, 10);
     Mock mockNester = mock(CompositeNode.class);
     mockEditor.expects(atLeastOnce()).method("getDiagram")
