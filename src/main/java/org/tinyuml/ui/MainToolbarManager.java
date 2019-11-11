@@ -89,6 +89,7 @@ public class MainToolbarManager implements ActionListener {
   private void addEditButtons() {
     createButton("cut");
     createButton("copy");
+    createButton("close");
     createButton("paste");
     createButton("delete");
     createButton("undo");
