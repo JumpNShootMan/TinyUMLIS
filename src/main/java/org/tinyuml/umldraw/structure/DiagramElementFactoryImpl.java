@@ -21,14 +21,9 @@ package org.tinyuml.umldraw.structure;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.tinyuml.model.RelationType;
-import org.tinyuml.model.ElementType;
-import org.tinyuml.model.Relation;
-import org.tinyuml.model.UmlClass;
-import org.tinyuml.model.UmlComponent;
-import org.tinyuml.model.UmlPackage;
+
+import org.tinyuml.model.*;
 import org.tinyuml.draw.LineConnectMethod;
-import org.tinyuml.model.UmlRelation;
 import org.tinyuml.umldraw.shared.NoteConnection;
 import org.tinyuml.umldraw.shared.NoteElement;
 import org.tinyuml.umldraw.shared.UmlConnection;
@@ -47,9 +42,9 @@ import org.tinyuml.umldraw.structure.Association.AssociationType;
 public class DiagramElementFactoryImpl implements DiagramElementFactory {
 
   private Map<ElementType, UmlDiagramElement> elementPrototypes =
-    new HashMap<ElementType, UmlDiagramElement>();
+          new HashMap<ElementType, UmlDiagramElement>();
   private Map<RelationType, UmlConnection> connectionPrototypes =
-    new HashMap<RelationType, UmlConnection>();
+          new HashMap<RelationType, UmlConnection>();
   private StructureDiagram diagram;
 
   /**
@@ -67,13 +62,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
    */
   private void setupElementPrototypeMap() {
     NoteElement notePrototype = (NoteElement)
-      NoteElement.getPrototype().clone();
+            NoteElement.getPrototype().clone();
     elementPrototypes.put(ElementType.NOTE, notePrototype);
 
     // Add package prototype
     UmlPackage pkg = (UmlPackage) UmlPackage.getPrototype().clone();
     PackageElement pkgPrototype = (PackageElement)
-      PackageElement.getPrototype().clone();
+            PackageElement.getPrototype().clone();
     pkg.setName("Package 1");
     pkgPrototype.setUmlPackage(pkg);
     elementPrototypes.put(ElementType.PACKAGE, pkgPrototype);
@@ -82,7 +77,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
     UmlComponent comp = (UmlComponent) UmlComponent.getPrototype().clone();
     comp.setName("Component 1");
     ComponentElement compElem = (ComponentElement)
-      ComponentElement.getPrototype().clone();
+            ComponentElement.getPrototype().clone();
     compElem.setModelElement(comp);
     compElem.addNodeChangeListener(diagram);
     elementPrototypes.put(ElementType.COMPONENT, compElem);
@@ -94,6 +89,14 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
     classElem.setModelElement(clss);
     classElem.addNodeChangeListener(diagram);
     elementPrototypes.put(ElementType.CLASS, classElem);
+
+    // Add actor prototype
+    UmlActor act = (UmlActor) UmlActor.getPrototype().clone();
+    act.setName("Actor 1");
+    ActorElement actElem = (ActorElement) ActorElement.getPrototype().clone();
+    actElem.setModelElement(act);
+    actElem.addNodeChangeListener(diagram);
+    elementPrototypes.put(ElementType.ACTOR, actElem);
   }
 
   /**
@@ -115,36 +118,36 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
     connectionPrototypes.put(RelationType.DEPENDENCY, depPrototype);
 
     Association assocPrototype = (Association)
-      Association.getPrototype().clone();
+            Association.getPrototype().clone();
     assocPrototype.setRelation((Relation) fullnavigable.clone());
     connectionPrototypes.put(RelationType.ASSOCIATION, assocPrototype);
 
     Association compPrototype = (Association)
-      Association.getPrototype().clone();
+            Association.getPrototype().clone();
     compPrototype.setAssociationType(AssociationType.COMPOSITION);
     compPrototype.setRelation((Relation) targetnavigable.clone());
     connectionPrototypes.put(RelationType.COMPOSITION, compPrototype);
 
     Association aggrPrototype = (Association)
-      Association.getPrototype().clone();
+            Association.getPrototype().clone();
     aggrPrototype.setAssociationType(AssociationType.AGGREGATION);
     aggrPrototype.setRelation((Relation) targetnavigable.clone());
     connectionPrototypes.put(RelationType.AGGREGATION, aggrPrototype);
 
     Inheritance inheritPrototype = (Inheritance)
-      Inheritance.getPrototype().clone();
+            Inheritance.getPrototype().clone();
     inheritPrototype.setRelation((Relation) notnavigable.clone());
     connectionPrototypes.put(RelationType.INHERITANCE, inheritPrototype);
 
     Inheritance interfRealPrototype = (Inheritance)
-      Inheritance.getPrototype().clone();
+            Inheritance.getPrototype().clone();
     interfRealPrototype.setRelation((Relation) notnavigable.clone());
     interfRealPrototype.setIsDashed(true);
     connectionPrototypes.put(RelationType.INTERFACE_REALIZATION,
-      interfRealPrototype);
+            interfRealPrototype);
 
     connectionPrototypes.put(RelationType.NOTE_CONNECTOR,
-      NoteConnection.getPrototype());
+            NoteConnection.getPrototype());
   }
 
   /**
@@ -160,7 +163,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
    * {@inheritDoc}
    */
   public UmlConnection createConnection(RelationType relationType,
-    UmlNode node1, UmlNode node2) {
+                                        UmlNode node1, UmlNode node2) {
     UmlConnection prototype = connectionPrototypes.get(relationType);
     UmlConnection conn = null;
     if (prototype != null) {
@@ -185,7 +188,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
    * @param node2 the Node 2
    */
   private void bindConnection(UmlConnection conn, UmlNode node1,
-    UmlNode node2) {
+                              UmlNode node2) {
     conn.setNode1(node1);
     conn.setNode2(node2);
     node1.addConnection(conn);

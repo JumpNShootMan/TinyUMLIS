@@ -20,10 +20,23 @@
 package org.tinyuml.model;
 
 /**
- * The possible element types.
+ * This class represents an UML package.
  * @author Wei-ju Wu
  * @version 1.0
  */
-public enum ElementType {
-  CLASS, COMPONENT, PACKAGE, NOTE, ACTOR
+public final class UmlActor extends AbstractUmlModelElement {
+
+    private static final long serialVersionUID = 6809406266611984432L;
+    private static UmlActor prototype = new UmlActor();
+
+    /**
+     * Returns the prototype instance.
+     * @return the prototype instance
+     */
+    public static UmlActor getPrototype() { return prototype; }
+
+    /**
+     * Constructor.
+     */
+    private UmlActor() { }
 }

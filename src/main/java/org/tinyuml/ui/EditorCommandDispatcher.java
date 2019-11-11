@@ -42,7 +42,7 @@ public class EditorCommandDispatcher implements AppCommandListener {
 
   private AppFrame frame;
   private Map<String, MethodCall> selectorMap =
-    new HashMap<String, MethodCall>();
+          new HashMap<String, MethodCall>();
 
   /**
    * Constructor.
@@ -59,83 +59,86 @@ public class EditorCommandDispatcher implements AppCommandListener {
   private void initSelectorMap() {
     try {
       selectorMap.put("SELECT_MODE", new MethodCall(
-        DiagramEditor.class.getMethod("setSelectionMode")));
+              DiagramEditor.class.getMethod("setSelectionMode")));
       selectorMap.put("REDO", new MethodCall(
-        DiagramEditor.class.getMethod("redo")));
+              DiagramEditor.class.getMethod("redo")));
       selectorMap.put("UNDO", new MethodCall(
-        DiagramEditor.class.getMethod("undo")));
+              DiagramEditor.class.getMethod("undo")));
       selectorMap.put("REDRAW", new MethodCall(
-        DiagramEditor.class.getMethod("redraw")));
+              DiagramEditor.class.getMethod("redraw")));
       selectorMap.put("ZOOM_50", new MethodCall(
-        DiagramEditor.class.getMethod("setScaling", Scaling.class),
-          Scaling.SCALING_50));
+              DiagramEditor.class.getMethod("setScaling", Scaling.class),
+              Scaling.SCALING_50));
       selectorMap.put("ZOOM_75", new MethodCall(
-        DiagramEditor.class.getMethod("setScaling", Scaling.class),
-          Scaling.SCALING_75));
+              DiagramEditor.class.getMethod("setScaling", Scaling.class),
+              Scaling.SCALING_75));
       selectorMap.put("ZOOM_100", new MethodCall(
-        DiagramEditor.class.getMethod("setScaling", Scaling.class),
-          Scaling.SCALING_100));
+              DiagramEditor.class.getMethod("setScaling", Scaling.class),
+              Scaling.SCALING_100));
       selectorMap.put("ZOOM_150", new MethodCall(
-        DiagramEditor.class.getMethod("setScaling", Scaling.class),
-          Scaling.SCALING_150));
+              DiagramEditor.class.getMethod("setScaling", Scaling.class),
+              Scaling.SCALING_150));
       selectorMap.put("BRING_TO_FRONT", new MethodCall(
-        DiagramEditor.class.getMethod("bringToFront")));
+              DiagramEditor.class.getMethod("bringToFront")));
       selectorMap.put("PUT_TO_BACK", new MethodCall(
-        DiagramEditor.class.getMethod("putToBack")));
+              DiagramEditor.class.getMethod("putToBack")));
       selectorMap.put("EDIT_PROPERTIES", new MethodCall(
-        DiagramEditor.class.getMethod("editProperties")));
+              DiagramEditor.class.getMethod("editProperties")));
 
       selectorMap.put("CREATE_PACKAGE", new MethodCall(
-        DiagramEditor.class.getMethod("setCreationMode", ElementType.class),
-          ElementType.PACKAGE));
+              DiagramEditor.class.getMethod("setCreationMode", ElementType.class),
+              ElementType.PACKAGE));
       selectorMap.put("CREATE_COMPONENT", new MethodCall(
-        DiagramEditor.class.getMethod("setCreationMode", ElementType.class),
-          ElementType.COMPONENT));
+              DiagramEditor.class.getMethod("setCreationMode", ElementType.class),
+              ElementType.COMPONENT));
+      selectorMap.put("CREATE_ACTOR", new MethodCall(
+              DiagramEditor.class.getMethod("setCreationMode", ElementType.class),
+              ElementType.ACTOR));
       selectorMap.put("CREATE_CLASS", new MethodCall(
-        DiagramEditor.class.getMethod("setCreationMode", ElementType.class),
-          ElementType.CLASS));
+              DiagramEditor.class.getMethod("setCreationMode", ElementType.class),
+              ElementType.CLASS));
       selectorMap.put("CREATE_NOTE", new MethodCall(
-        DiagramEditor.class.getMethod("setCreationMode", ElementType.class),
-          ElementType.NOTE));
+              DiagramEditor.class.getMethod("setCreationMode", ElementType.class),
+              ElementType.NOTE));
       selectorMap.put("CREATE_DEPENDENCY", new MethodCall(
-        DiagramEditor.class.getMethod("setCreateConnectionMode",
-        RelationType.class), RelationType.DEPENDENCY));
+              DiagramEditor.class.getMethod("setCreateConnectionMode",
+                      RelationType.class), RelationType.DEPENDENCY));
       selectorMap.put("CREATE_NOTE_CONNECTION", new MethodCall(
-        DiagramEditor.class.getMethod("setCreateConnectionMode",
-        RelationType.class), RelationType.NOTE_CONNECTOR));
+              DiagramEditor.class.getMethod("setCreateConnectionMode",
+                      RelationType.class), RelationType.NOTE_CONNECTOR));
       selectorMap.put("CREATE_ASSOCIATION", new MethodCall(
-        DiagramEditor.class.getMethod("setCreateConnectionMode",
-        RelationType.class), RelationType.ASSOCIATION));
+              DiagramEditor.class.getMethod("setCreateConnectionMode",
+                      RelationType.class), RelationType.ASSOCIATION));
       selectorMap.put("CREATE_COMPOSITION", new MethodCall(
-        DiagramEditor.class.getMethod("setCreateConnectionMode",
-        RelationType.class), RelationType.COMPOSITION));
+              DiagramEditor.class.getMethod("setCreateConnectionMode",
+                      RelationType.class), RelationType.COMPOSITION));
       selectorMap.put("CREATE_AGGREGATION", new MethodCall(
-        DiagramEditor.class.getMethod("setCreateConnectionMode",
-        RelationType.class), RelationType.AGGREGATION));
+              DiagramEditor.class.getMethod("setCreateConnectionMode",
+                      RelationType.class), RelationType.AGGREGATION));
       selectorMap.put("CREATE_INHERITANCE", new MethodCall(
-        DiagramEditor.class.getMethod("setCreateConnectionMode",
-        RelationType.class), RelationType.INHERITANCE));
+              DiagramEditor.class.getMethod("setCreateConnectionMode",
+                      RelationType.class), RelationType.INHERITANCE));
       selectorMap.put("CREATE_INTERFACE_REALIZATION", new MethodCall(
-        DiagramEditor.class.getMethod("setCreateConnectionMode",
-        RelationType.class), RelationType.INTERFACE_REALIZATION));
+              DiagramEditor.class.getMethod("setCreateConnectionMode",
+                      RelationType.class), RelationType.INTERFACE_REALIZATION));
       selectorMap.put("RESET_POINTS", new MethodCall(
-        DiagramEditor.class.getMethod("resetConnectionPoints")));
+              DiagramEditor.class.getMethod("resetConnectionPoints")));
       selectorMap.put("RECT_TO_DIRECT", new MethodCall(
-        DiagramEditor.class.getMethod("rectilinearToDirect")));
+              DiagramEditor.class.getMethod("rectilinearToDirect")));
       selectorMap.put("DIRECT_TO_RECT", new MethodCall(
-        DiagramEditor.class.getMethod("directToRectilinear")));
+              DiagramEditor.class.getMethod("directToRectilinear")));
       selectorMap.put("NAVIGABLE_TO_SOURCE", new MethodCall(
-        DiagramEditor.class.getMethod("setNavigability", RelationEndType.class),
-        RelationEndType.SOURCE));
+              DiagramEditor.class.getMethod("setNavigability", RelationEndType.class),
+              RelationEndType.SOURCE));
       selectorMap.put("NAVIGABLE_TO_TARGET", new MethodCall(
-        DiagramEditor.class.getMethod("setNavigability", RelationEndType.class),
-        RelationEndType.TARGET));
+              DiagramEditor.class.getMethod("setNavigability", RelationEndType.class),
+              RelationEndType.TARGET));
 
       // Self-calls
       selectorMap.put("SHOW_GRID", new MethodCall(
-        getClass().getMethod("showGrid")));
+              getClass().getMethod("showGrid")));
       selectorMap.put("SNAP_TO_GRID", new MethodCall(
-        getClass().getMethod("snapToGrid")));
+              getClass().getMethod("snapToGrid")));
     } catch (NoSuchMethodException ex) {
       ex.printStackTrace();
     }
@@ -146,7 +149,7 @@ public class EditorCommandDispatcher implements AppCommandListener {
    */
   public void showGrid() {
     getCurrentEditor().showGrid(
-      getMenuManager().isSelected("SHOW_GRID"));
+            getMenuManager().isSelected("SHOW_GRID"));
     getCurrentEditor().redraw();
   }
 
@@ -166,7 +169,7 @@ public class EditorCommandDispatcher implements AppCommandListener {
       Object target = getCurrentEditor();
       // in order to catch the self calling methods
       if (methodcall.getMethod().getDeclaringClass()
-        == EditorCommandDispatcher.class) {
+              == EditorCommandDispatcher.class) {
         target = this;
       }
       methodcall.call(target);
