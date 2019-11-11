@@ -33,6 +33,7 @@ public final class Scaling {
   public static final Scaling SCALING_75 = new Scaling(0.75);
   public static final Scaling SCALING_100 = new Scaling(1.0);
   public static final Scaling SCALING_150 = new Scaling(1.5);
+  public static final Scaling SCALING_200 = new Scaling(2.0);
 
   /**
    * Constructor.
