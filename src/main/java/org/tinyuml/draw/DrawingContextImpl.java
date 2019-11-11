@@ -25,6 +25,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
@@ -41,9 +42,9 @@ public class DrawingContextImpl implements DrawingContext {
   // This is the standard font for the component.
   private static final Font DEFAULT_FONT = new Font("Arial", Font.PLAIN, 12);
   private static final Font ELEMENT_NAME_FONT =
-    new Font("Arial", Font.BOLD, 12);
+          new Font("Arial", Font.BOLD, 12);
   private static final Font ABSTRACT_ELEMENT_FONT =
-    new Font("Arial", Font.BOLD | Font.ITALIC, 12);
+          new Font("Arial", Font.BOLD | Font.ITALIC, 12);
 
   private Graphics2D g2d;
   private DrawingShapeFactory shapeFactory = DrawingShapeFactory.getInstance();
@@ -94,7 +95,7 @@ public class DrawingContextImpl implements DrawingContext {
    * {@inheritDoc}
    */
   public void drawRectangle(double x, double y, double width, double height,
-    Color fillColor) {
+                            Color fillColor) {
     drawRectangle(x, y, width, height, null, fillColor);
   }
 
@@ -102,7 +103,7 @@ public class DrawingContextImpl implements DrawingContext {
    * {@inheritDoc}
    */
   public void drawRectangle(double x, double y, double width, double height,
-    Color strokeColor, Color fillColor) {
+                            Color strokeColor, Color fillColor) {
     g2d.setStroke(shapeFactory.getStandardStroke());
     Rectangle2D rect = shapeFactory.createRect2d(x, y, width, height);
     if (fillColor != null) {
@@ -117,7 +118,7 @@ public class DrawingContextImpl implements DrawingContext {
    * {@inheritDoc}
    */
   public void fillRectangle(double x, double y, double width, double height,
-    Color fillColor) {
+                            Color fillColor) {
     g2d.setColor(fillColor);
     g2d.fill(shapeFactory.createRect2d(x, y, width, height));
   }
@@ -183,11 +184,18 @@ public class DrawingContextImpl implements DrawingContext {
    * {@inheritDoc}
    */
   public Graphics2D getGraphics2D() { return g2d; }
-  
+
   /**
    * {@inheritDoc}
    */
   public void setColor(Color color) {
-	g2d.setColor(color);
+    g2d.setColor(color);
+  }
+
+  public void drawCircle(double x,double y, double width, double height)
+  {
+    g2d.setStroke(shapeFactory.getStandardStroke());
+    g2d.draw(new Ellipse2D.Double(x, y, width, height));
+
   }
 }

@@ -44,9 +44,9 @@ import org.tinyuml.util.IconLoader;
 public class StaticStructureEditorToolbarManager implements ActionListener {
   private JToolBar toolbar = new JToolBar();
   private List<AppCommandListener> listeners =
-    new ArrayList<AppCommandListener>();
+          new ArrayList<AppCommandListener>();
   private Map<String, AbstractButton> buttonMap =
-    new HashMap<String, AbstractButton>();
+          new HashMap<String, AbstractButton>();
   private ButtonGroup buttongroup;
 
   /**
@@ -58,6 +58,7 @@ public class StaticStructureEditorToolbarManager implements ActionListener {
     toolbar.add(createToggleButton(buttongroup, "package"));
     toolbar.add(createToggleButton(buttongroup, "class"));
     toolbar.add(createToggleButton(buttongroup, "component"));
+    toolbar.add(createToggleButton(buttongroup, "actor"));
     toolbar.addSeparator(new Dimension(10, 10));
     toolbar.add(createToggleButton(buttongroup, "dependency"));
     toolbar.add(createToggleButton(buttongroup, "association"));
@@ -127,10 +128,10 @@ public class StaticStructureEditorToolbarManager implements ActionListener {
    * @return the toggle button
    */
   private JToggleButton createToggleButton(ButtonGroup aButtonGroup,
-    String name) {
+                                           String name) {
     String prefix = "statictoolbar." + name;
     JToggleButton button = new JToggleButton(
-      IconLoader.getInstance().getIcon(getResourceString(prefix + ".icon")));
+            IconLoader.getInstance().getIcon(getResourceString(prefix + ".icon")));
     button.setMargin(new Insets(1, 1, 1, 1));
     String actionCommand = getResourceString(prefix + ".command");
     button.setActionCommand(actionCommand);

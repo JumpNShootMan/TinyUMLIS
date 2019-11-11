@@ -92,7 +92,7 @@ public interface DrawingContext {
    * @param fillColor the fill color
    */
   void drawRectangle(double x, double y, double width, double height,
-    Color fillColor);
+                     Color fillColor);
 
   /**
    * Fills the specfied rectangle.
@@ -103,7 +103,7 @@ public interface DrawingContext {
    * @param fillColor the fill color
    */
   void fillRectangle(double x, double y, double width, double height,
-    Color fillColor);
+                     Color fillColor);
 
   /**
    * Draws the specified rectangle with the given fill color and stroke color.
@@ -115,7 +115,7 @@ public interface DrawingContext {
    * @param fillColor the fill color
    */
   void drawRectangle(double x, double y, double width, double height,
-    Color strokeColor, Color fillColor);
+                     Color strokeColor, Color fillColor);
 
   /**
    * Draws a "rubber band", a dashed rectangle.
@@ -171,10 +171,13 @@ public interface DrawingContext {
    * @return the Graphics2D object
    */
   Graphics2D getGraphics2D();
-  
+
   /**
    * Changes the current Graphics2D (g2d) color
    * Implementado para la solicitud C de la tarea.
    */
   void setColor(Color color);
+
+  void drawCircle(double x,double y, double width, double height);
+
 }

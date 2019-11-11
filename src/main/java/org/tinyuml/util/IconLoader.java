@@ -39,7 +39,7 @@ public final class IconLoader {
     NEW, OPEN, SAVE, CUT, COPY, PASTE, DELETE, UNDO, REDO,
     ABOUT,
     MOUSE_POINTER,
-    CLASS, PACKAGE, COMPONENT, DEPENDENCY, ASSOCIATION, AGGREGATION,
+    CLASS, PACKAGE, COMPONENT, DEPENDENCY, ASSOCIATION, AGGREGATION, ACTOR,
     COMPOSITION, INHERITANCE, INTERFACE_REALIZATION, NOTE, NOTE_CONNECTOR
   }
 
@@ -61,6 +61,7 @@ public final class IconLoader {
     urlMap.put(IconType.PACKAGE, "org/tinyuml/ui/package.png");
     urlMap.put(IconType.COMPONENT, "org/tinyuml/ui/component.png");
     urlMap.put(IconType.DEPENDENCY, "org/tinyuml/ui/dependency.png");
+    urlMap.put(IconType.ACTOR, "org/tinyuml/ui/actor.png");
     urlMap.put(IconType.ASSOCIATION, "org/tinyuml/ui/association.png");
     urlMap.put(IconType.NOTE, "org/tinyuml/ui/note.png");
     urlMap.put(IconType.NOTE_CONNECTOR, "org/tinyuml/ui/note-connector.png");
@@ -68,7 +69,7 @@ public final class IconLoader {
     urlMap.put(IconType.COMPOSITION, "org/tinyuml/ui/composition.png");
     urlMap.put(IconType.INHERITANCE, "org/tinyuml/ui/inheritance.png");
     urlMap.put(IconType.INTERFACE_REALIZATION,
-      "org/tinyuml/ui/interface-realization.png");
+            "org/tinyuml/ui/interface-realization.png");
 
     urlMap.put(IconType.NEW, "org/fife/plaf/Office2003/new.gif");
     urlMap.put(IconType.OPEN, "org/fife/plaf/Office2003/open.gif");
@@ -98,7 +99,7 @@ public final class IconLoader {
       String urlstr = urlMap.get(type);
       if (urlstr != null) {
         iconMap.put(type,
-          new ImageIcon(getClass().getClassLoader().getResource(urlstr)));
+                new ImageIcon(getClass().getClassLoader().getResource(urlstr)));
       }
     }
     return iconMap.get(type);

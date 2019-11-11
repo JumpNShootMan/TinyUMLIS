@@ -43,7 +43,7 @@ import org.tinyuml.umldraw.shared.UmlNode;
  * @version 1.0
  */
 public class CreationHandlerTest extends MockObjectTestCase {
-  
+
   private Mock mockEditor = mock(DiagramEditor.class);
   private Mock mockEvent = mock(EditorMouseEvent.class);
   private Mock mockDiagram = mock(StructureDiagram.class);
@@ -51,8 +51,8 @@ public class CreationHandlerTest extends MockObjectTestCase {
   private Mock mockDrawingContext = mock(DrawingContext.class);
   private Mock mockFactory = mock(DiagramElementFactory.class);
   private CreationHandler handler =
-    new CreationHandler((DiagramEditor) mockEditor.proxy());
-  
+          new CreationHandler((DiagramEditor) mockEditor.proxy());
+
   /**
    * Tests initial state.
    */
@@ -63,19 +63,19 @@ public class CreationHandlerTest extends MockObjectTestCase {
     handler.mouseDragged(null);
     handler.cancel();
   }
-  
+
   /**
    * Tests moving the mouse and draw().
    */
   public void testMouseMoveAndDraw() {
     mockEditor.expects(atLeastOnce()).method("getDiagram")
-      .will(returnValue(mockDiagram.proxy()));
+            .will(returnValue(mockDiagram.proxy()));
     mockDiagram.expects(atLeastOnce()).method("getElementFactory")
-      .will(returnValue(mockFactory.proxy()));
+            .will(returnValue(mockFactory.proxy()));
     mockNode.expects(atLeastOnce()).method("setParent")
-      .with(eq(mockDiagram.proxy()));
+            .with(eq(mockDiagram.proxy()));
     mockFactory.expects(once()).method("createNode")
-      .will(returnValue(mockNode.proxy()));
+            .will(returnValue(mockNode.proxy()));
     handler.setElementType(ElementType.CLASS);
 
     int id = 12345;
@@ -85,62 +85,68 @@ public class CreationHandlerTest extends MockObjectTestCase {
     Component comp = new JLabel();
     boolean popupTrigger = true;
     MouseEvent mouseEvent = new MouseEvent(comp, 12345, now, modifiers, x, y,
-      clickCount, popupTrigger, MouseEvent.BUTTON2);
+            clickCount, popupTrigger, MouseEvent.BUTTON2);
     EditorMouseEvent event = new EditorMouseEvent();
     event.setMouseEvent(mouseEvent, Scaling.SCALING_100);
     mockEditor.expects(once()).method("redraw");
     handler.mouseMoved(event);
-    
+
     // expectations
     Mock mockNester = mock(CompositeNode.class);
     mockDiagram.expects(once()).method("getChildAt")
-      .will(returnValue(mockNester.proxy()));
+            .will(returnValue(mockNester.proxy()));
     mockNester.expects(once()).method("canNestElements")
-      .will(returnValue(true));
+            .will(returnValue(true));
     mockNester.expects(once()).method("getAbsoluteBounds")
-      .will(returnValue(new Rectangle2D.Double(0, 0, 100, 100)));
+            .will(returnValue(new Rectangle2D.Double(0, 0, 100, 100)));
     mockNode.expects(once()).method("recalculateSize");
     mockNode.expects(once()).method("getAbsoluteBounds")
-      .will(returnValue(new Rectangle2D.Double(5, 5, 10, 10)));
+            .will(returnValue(new Rectangle2D.Double(5, 5, 10, 10)));
     mockDrawingContext.expects(exactly(2)).method("drawRectangle");
     handler.draw((DrawingContext) mockDrawingContext.proxy());
   }
-  
+
   /**
    * Tests the creation.
    */
   public void testCreate(int num) {
     mockEditor.expects(atLeastOnce()).method("getDiagram")
-      .will(returnValue(mockDiagram.proxy()));
+            .will(returnValue(mockDiagram.proxy()));
     mockDiagram.expects(atLeastOnce()).method("getElementFactory")
-      .will(returnValue(mockFactory.proxy()));
+            .will(returnValue(mockFactory.proxy()));
     mockEditor.expects(atLeastOnce()).method("execute");
     mockNode.expects(atLeastOnce()).method("setParent")
-      .with(eq(mockDiagram.proxy()));
+            .with(eq(mockDiagram.proxy()));
     mockDiagram.expects(atLeastOnce()).method("getChildAt")
-      .will(returnValue(NullElement.getInstance()));
-    
+            .will(returnValue(NullElement.getInstance()));
+
     // create class
     mockFactory.expects(once()).method("createNode")
-      .will(returnValue(mockNode.proxy()));
+            .will(returnValue(mockNode.proxy()));
     handler.setElementType(ElementType.CLASS);
     handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
 
     // create package
     mockFactory.expects(once()).method("createNode")
-      .will(returnValue(mockNode.proxy()));
+            .will(returnValue(mockNode.proxy()));
     handler.setElementType(ElementType.PACKAGE);
     handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
 
     // create component
     mockFactory.expects(once()).method("createNode")
-      .will(returnValue(mockNode.proxy()));
+            .will(returnValue(mockNode.proxy()));
     handler.setElementType(ElementType.COMPONENT);
+    handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
+
+    // create actor
+    mockFactory.expects(once()).method("createNode")
+            .will(returnValue(mockNode.proxy()));
+    handler.setElementType(ElementType.ACTOR);
     handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
 
     // create note
     mockFactory.expects(once()).method("createNode")
-      .will(returnValue(mockNode.proxy()));
+            .will(returnValue(mockNode.proxy()));
     handler.setElementType(ElementType.NOTE);
     handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
   }
@@ -152,41 +158,48 @@ public class CreationHandlerTest extends MockObjectTestCase {
     Rectangle2D nodeBounds = new Rectangle2D.Double(0, 0, 10, 10);
     Mock mockNester = mock(CompositeNode.class);
     mockEditor.expects(atLeastOnce()).method("getDiagram")
-      .will(returnValue(mockDiagram.proxy()));
+            .will(returnValue(mockDiagram.proxy()));
     mockDiagram.expects(atLeastOnce()).method("getElementFactory")
-      .will(returnValue(mockFactory.proxy()));
+            .will(returnValue(mockFactory.proxy()));
     mockEditor.expects(atLeastOnce()).method("execute");
     mockNode.expects(atLeastOnce()).method("setParent")
-      .with(eq(mockDiagram.proxy()));
+            .with(eq(mockDiagram.proxy()));
     mockDiagram.expects(atLeastOnce()).method("getChildAt")
-      .will(returnValue(mockNester.proxy()));
+            .will(returnValue(mockNester.proxy()));
     mockNester.expects(once()).method("canNestElements")
-      .will(returnValue(true));
+            .will(returnValue(true));
     mockNester.expects(once()).method("getAbsoluteBounds")
-      .will(returnValue(new Rectangle2D.Double(0, 0, 100, 100)));
-    
+            .will(returnValue(new Rectangle2D.Double(0, 0, 100, 100)));
+
     // create class
     mockFactory.expects(once()).method("createNode")
-      .will(returnValue(mockNode.proxy()));
+            .will(returnValue(mockNode.proxy()));
     handler.setElementType(ElementType.CLASS);
     handler.setCachedBounds(nodeBounds);
     handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
 
     // create package
     mockFactory.expects(once()).method("createNode")
-      .will(returnValue(mockNode.proxy()));
+            .will(returnValue(mockNode.proxy()));
     handler.setElementType(ElementType.PACKAGE);
     handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
 
     // create component
     mockFactory.expects(once()).method("createNode")
-      .will(returnValue(mockNode.proxy()));
+            .will(returnValue(mockNode.proxy()));
     handler.setElementType(ElementType.COMPONENT);
+    handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
+
+    // create ACTOR
+    mockFactory.expects(once()).method("createNode")
+            .will(returnValue(mockNode.proxy()));
+    handler.setElementType(ElementType.ACTOR);
+    //handler.setCachedBounds(nodeBounds);
     handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
 
     // create note
     mockFactory.expects(once()).method("createNode")
-      .will(returnValue(mockNode.proxy()));
+            .will(returnValue(mockNode.proxy()));
     handler.setElementType(ElementType.NOTE);
     handler.mousePressed((EditorMouseEvent) mockEvent.proxy());
   }
