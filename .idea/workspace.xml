@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b9a22a82-ce61-45c2-ac2b-76fa358afa5d" name="Default Changelist" comment="" />
+    <list default="true" id="1ce7b72d-7d3d-4304-8a12-84a56e79ef74" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +24,13 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectId" id="1TPUam4eJBx8B96ip653oJwWHe2" />
+  <component name="ProjectId" id="1TUOADQX7bMENefpcgwKABAamRB" />
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -61,13 +69,17 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b9a22a82-ce61-45c2-ac2b-76fa358afa5d" name="Default Changelist" comment="" />
-      <created>1573361290825</created>
+      <changelist id="1ce7b72d-7d3d-4304-8a12-84a56e79ef74" name="Default Changelist" comment="" />
+      <created>1573511061293</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1573361290825</updated>
+      <updated>1573511061293</updated>
+      <workItem from="1573511062867" duration="242000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -79,26 +91,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/tinyuml/umldraw/structure/DiagramElementFactoryImpl.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/tinyuml/ui/EditorCommandDispatcher.java</url>
-          <line>87</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/tinyuml/ui/EditorCommandDispatcher.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="57" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
